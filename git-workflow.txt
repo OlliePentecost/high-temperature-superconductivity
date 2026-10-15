@@ -1,0 +1,8 @@
+# Git Workflow
+
+- Before starting work, ensure to pull from main, and then ensure you have an up to date
+  copy of the codebase 
+
+- The next step is to create a branch of the feature you desire, for example "prettier-plots"
+- code away, making commits and having fun 
+- then you need to 
