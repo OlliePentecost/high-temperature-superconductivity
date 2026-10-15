@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 #=============================
 #  Read Squid data function  #
 #=============================
@@ -56,7 +56,7 @@ def read_squid_file(filepath: str) -> pd.DataFrame:
     return df
 
 #=============================
-#  Find T_c Function  #
+#     Find T_c Function      #
 #=============================
 def determine_critical_temp(dataframe: pd.DataFrame, lo: float = 0.4, hi: float = 0.6):
     """
@@ -87,3 +87,30 @@ def determine_critical_temp(dataframe: pd.DataFrame, lo: float = 0.4, hi: float 
 
     t_crit = -intercept / slope if slope != 0 else np.nan
     return t_crit, fitted_line, np.zeros_like(temperature)
+
+#=============================
+#      Find H_c Function     #
+#=============================
+    """
+        Function for determining H_c, it determines a noise floor, determined by the user,
+        when the material reaches the critical field, the magnetic moment increases/decreases
+        therefore we can track the point where this happens, and note it as critical field 
+    
+        kwargs:
+        dataframe: the dataframe that is inserted into the funciton, expcected to be from MPMS3 (like fucntion thats used above)
+        threshold: where we decide the field is definitely critical, and not just a noise spike
+        
+        note:
+        The default parameters are chosen 
+        """
+def determine_critical_field(dataframe: pd.DataFrame, threshold: float = 0.02):
+    df = dataframe.sort_values("Magnetic Field (Oe)")
+    field = df["Magnetic Field (Oe)"].to_numpy()
+    moment = df["DC Moment Fixed Ctr (emu)"].to_numpy()
+    cutoff  = threshold * np.max(np.abs(moment))
+
+    field_pos = field[moment < -cutoff].max()   
+    field_neg = field[moment > cutoff].min()  
+    f_crit = (field_pos - field_neg) / 2
+    return f_crit, field_pos, field_neg
+
