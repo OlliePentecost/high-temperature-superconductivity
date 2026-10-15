@@ -103,7 +103,7 @@ def determine_critical_temp(dataframe: pd.DataFrame, lo: float = 0.4, hi: float 
         note:
         The default parameters are chosen 
         """
-def determine_critical_field(dataframe: pd.DataFrame, threshold: float = 0.02):
+def determine_critical_field(dataframe: pd.DataFrame, threshold: float = 0.005):
     df = dataframe.sort_values("Magnetic Field (Oe)")
     field = df["Magnetic Field (Oe)"].to_numpy()
     moment = df["DC Moment Fixed Ctr (emu)"].to_numpy()
