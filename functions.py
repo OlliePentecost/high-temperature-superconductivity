@@ -74,8 +74,9 @@ def determine_critical_temp(dataframe: pd.DataFrame, lo: float = 0.4, hi: float 
     temperature = df["Temperature (K)"].to_numpy()
     moment = df["DC Moment Fixed Ctr (emu)"].to_numpy()
 
-    m_sc = np.median(moment[:10])       
-    m_n = np.median(moment[-10:])       
+    # m_sc = np.median(moment[:10])       
+    # m_n = np.median(moment[-10:])       
+    m_sc, m_n = np.percentile(moment, [5,95])
     moment_norm = (moment - m_n) / (m_sc - m_n)
 
     mask = (moment_norm < hi) & (moment_norm > lo)
