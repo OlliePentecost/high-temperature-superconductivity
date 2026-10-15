@@ -6,5 +6,10 @@
 - The next step is to create a branch of the feature you desire, for example "prettier-plots"
 - code away, making commits and having fun 
 - then you need to checkout your banch when you are happy and have finished working 
+- the next step is to push the branch to github
+
+                git push -u origin <branch-name>
+
 - then go onto github, and create a pull request 
 - then merge if there are no conflicts usually there wont be any work conflicts, as we are making our own jupyter notebooks
+
